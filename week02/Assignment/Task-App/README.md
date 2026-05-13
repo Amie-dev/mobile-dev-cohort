@@ -1,56 +1,197 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+# 📒 Notes App UI – React Native Assignment
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 🎥 Demo Video
 
-   ```bash
-   npx expo start
-   ```
+Demo Video Link:
+[https://x.com/AminulIsla65775/status/2054140204861255761?s=20]
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+# 🚀 Project Overview
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+This project is a clean and responsive **Notes App UI** built using **React Native with Expo**.
 
-## Get a fresh project
+The main goal of this assignment was to practice:
 
-When you're ready, run:
+* React Native core components
+* Responsive mobile UI design
+* Dark/Light theme handling
+* Input handling
+* Clean styling practices
+* Component structuring
 
-```bash
-npm run reset-project
+The application includes:
+
+* Notes Listing Screen
+* Note Editor Screen
+
+The UI was designed to feel modern, responsive, and user-friendly while maintaining clean code architecture.
+
+---
+
+# 📱 Features Implemented
+
+## ✅ Notes Listing Screen
+
+* Notes displayed using `FlatList`
+* Search/filter functionality using `TextInput`
+* Responsive note cards
+* Pressable interactive cards
+* Dark/Light theme toggle
+* Responsive tablet support
+* Empty search state handling
+* Smooth pressed-state feedback animations
+
+---
+
+## ✅ Note Editor Screen
+
+* Note title input
+* Multiline note content input
+* `KeyboardAvoidingView` implementation
+* `ImageBackground` hero header
+* Save button
+* Back button
+* Responsive spacing for different screen sizes
+
+---
+
+# 🧩 React Native Components Used
+
+* `View`
+* `Text`
+* `TextInput`
+* `FlatList`
+* `Pressable`
+* `SafeAreaView`
+* `KeyboardAvoidingView`
+* `ImageBackground`
+* `Switch`
+
+---
+
+# 🎣 Hooks Used
+
+* `useState()`
+* `useMemo()`
+* `useColorScheme()`
+* `useWindowDimensions()`
+
+---
+
+# 🎨 Theme Handling
+
+Implemented automatic dark/light mode detection using:
+
+```tsx
+useColorScheme()
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Also added manual theme toggling functionality using a custom theme switch component.
 
-### Other setup steps
+---
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+# 📐 Responsive Design
 
-## Learn more
+Implemented responsive layouts using:
 
-To learn more about developing your project with Expo, look at the following resources:
+```tsx
+useWindowDimensions()
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Tablet layouts automatically switch to a 2-column notes grid.
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+# 🎨 Styling Techniques Used
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+* `StyleSheet.create()`
+* `StyleSheet.compose()`
+* `StyleSheet.flatten()`
+
+No unnecessary inline styles were used.
+
+---
+
+# ✨ Additional UI Improvements
+
+## Added Enhancements
+
+* Premium card shadows
+* Active pressed card animation
+* Smooth scale interaction
+* Search filtering
+* Theme toggle component
+* Modern typography
+* Better spacing hierarchy
+* Responsive note grid
+* Empty state UI
+* Modern productivity-app inspired design
+
+---
+
+# 📂 Project Structure
+
+```txt
+app/
+└── index.tsx
+
+screens/
+├── NotesListScreen.tsx
+└── NoteEditorScreen.tsx
+
+components/
+└── ThemeToggle.tsx
+
+constants/
+└── colors.ts
+
+data/
+└── notes.ts
+```
+
+---
+
+# 🛠️ Tech Stack
+
+* React Native
+* Expo
+* TypeScript
+
+---
+
+# ✅ Assignment Requirements Covered
+
+* FlatList
+* Pressable
+* TextInput
+* Switch
+* KeyboardAvoidingView
+* ImageBackground
+* useColorScheme
+* useWindowDimensions
+* StyleSheet.create
+* StyleSheet.compose
+* StyleSheet.flatten
+* Dark/Light Theme
+* Responsive Layouts
+
+---
+
+# 🙌 Conclusion
+
+This project helped improve understanding of:
+
+* Mobile UI structuring
+* Responsive layouts
+* React Native core components
+* Theme management
+* Clean styling architecture
+* Component reusability
+
+The application was designed with a strong focus on user experience, readability, and clean UI design.

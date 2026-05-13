@@ -64,9 +64,9 @@ export default function Index() {
             setSelectedNote(null);
             setScreen("editor");
           }}
-          onOpenScreen={() => {
-            setScreen("editor");
-          }}
+          // onOpenScreen={() => {
+          //   setScreen("editor");
+          // }}
           onToggleTheme={() => {
             setManualDark((prev) => !isDark);
           }}
