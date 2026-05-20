@@ -1,4 +1,6 @@
-# 🚀 Full Setup — Expo SDK 55 + React Navigation + TypeScript
+# 🚀 Full React Navigation Setup
+
+## Expo SDK 55 + TypeScript + Babel + Reanimated
 
 ---
 
@@ -26,9 +28,9 @@ npm install @react-navigation/native
 
 ---
 
-# ✅ Step 4 — Install Navigation Types
+# ✅ Step 4 — Install Navigators
 
-## Native Stack
+## Native Stack Navigator
 
 ```bash
 npm install @react-navigation/native-stack
@@ -68,11 +70,10 @@ npm install @react-navigation/material-top-tabs
 
 ---
 
-# ✅ Step 5 — Install Expo Compatible Native Dependencies
+# ✅ Step 5 — Install Expo Compatible Native Packages
 
-VERY IMPORTANT ⚠️
-
-Use `expo install`
+⚠️ IMPORTANT
+Use `expo install` for native dependencies.
 
 ```bash
 npx expo install react-native-screens
@@ -108,6 +109,10 @@ npm install @expo/vector-icons
 
 ```bash
 npm install react-native-worklets
+```
+
+```bash
+npm install --save-dev babel-preset-expo
 ```
 
 ---
@@ -181,12 +186,24 @@ export default function App() {
 ```txt
 src
  ├── navigator
- │     └── stack
- │            └── DynamicStackNavigator.tsx
+ │     ├── stack
+ │     │      └── DynamicStackNavigator.tsx
+ │     │
+ │     ├── tabs
+ │     │
+ │     └── drawer
  │
- └── screens
-       ├── HomeScreen.tsx
-       └── ProfileScreen.tsx
+ ├── screens
+ │     ├── HomeScreen.tsx
+ │     └── ProfileScreen.tsx
+ │
+ ├── components
+ │
+ ├── constants
+ │
+ ├── hooks
+ │
+ └── assets
 ```
 
 ---
@@ -273,7 +290,7 @@ export default function DynamicStackNavigator() {
 
 ---
 
-# ✅ Step 15 — Start Expo
+# ✅ Step 15 — Start Expo Server
 
 ```bash
 npx expo start -c
@@ -301,38 +318,84 @@ npm run android
 
 # ✅ Important Rules
 
-## ❌ NEVER DO THIS
+## ❌ NEVER INSTALL THESE MANUALLY
 
 ```bash
 npm install react-native
 ```
 
-inside Expo projects.
+```bash
+npm install react
+```
 
-Expo controls React Native version.
+```bash
+npm install expo
+```
+
+Expo controls those versions automatically.
 
 ---
 
-## ✅ Always Use
+# ✅ Use Correct Installation Method
+
+## Native Packages
+
+Use:
 
 ```bash
 npx expo install
 ```
 
-for native packages.
+Examples:
+
+* react-native-screens
+* gesture-handler
+* reanimated
 
 ---
 
-# ✅ Final Working Navigation Packages
+## JS Packages
 
-| Package                  | Purpose             |
-| ------------------------ | ------------------- |
-| @react-navigation/native | Core                |
-| native-stack             | Fast stack          |
-| stack                    | JS stack            |
-| bottom-tabs              | Bottom tabs         |
-| drawer                   | Drawer menu         |
-| material-top-tabs        | Top tabs            |
-| react-native-screens     | Native optimization |
-| gesture-handler          | Gestures            |
-| reanimated               | Animations          |
+Use:
+
+```bash
+npm install
+```
+
+Examples:
+
+* react-navigation
+* axios
+* zustand
+
+---
+
+# ✅ Final Installed Navigation Packages
+
+| Package                             | Purpose              |
+| ----------------------------------- | -------------------- |
+| @react-navigation/native            | Navigation core      |
+| @react-navigation/native-stack      | Fast native stack    |
+| @react-navigation/stack             | JS stack             |
+| @react-navigation/bottom-tabs       | Bottom tabs          |
+| @react-navigation/drawer            | Drawer menu          |
+| @react-navigation/material-top-tabs | Top tabs             |
+| react-native-screens                | Native optimization  |
+| react-native-safe-area-context      | Safe area support    |
+| react-native-gesture-handler        | Gesture support      |
+| react-native-reanimated             | Smooth animations    |
+| react-native-worklets               | Reanimated support   |
+| @expo/vector-icons                  | Icons                |
+| @react-navigation/elements          | Shared navigation UI |
+
+---
+
+# ✅ Recommended Learning Order
+
+1️⃣ Native Stack Navigator
+2️⃣ Bottom Tabs
+3️⃣ Drawer Navigator
+4️⃣ Material Top Tabs
+5️⃣ Nested Navigation
+6️⃣ Dynamic Navigation
+7️⃣ Auth Navigation Flow
