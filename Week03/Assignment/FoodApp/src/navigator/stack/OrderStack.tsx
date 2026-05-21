@@ -1,11 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import OrderScreen from '../../screens/OrderScreen'
 
 const OrderStack = () => {
+  const Stack=createStackNavigator()
   return (
-    <View>
-      <Text>OrderStack</Text>
-    </View>
+    <Stack.Navigator screenOptions={{
+      headerShown:false
+    }}>
+      <Stack.Screen name='order' component={OrderScreen} />
+    </Stack.Navigator>
   )
 }
 
