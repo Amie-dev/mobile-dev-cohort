@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import * as NavigationBar from "expo-navigation-bar";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "react-native";
 
 import RootNavigator from "./src/navigator/RootNavigator";
 import { ThemeProvider, useTheme } from "./src/context/ThemeContext";
-import { StatusBar } from "react-native";
 
 function AppContent() {
   const { isDarkMode, theme } = useTheme();
@@ -17,9 +17,9 @@ function AppContent() {
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <StatusBar
         backgroundColor={theme.tabBg}
-        // barStyle={}
-        barStyle={!isDarkMode ? "dark-content" : "light-content"}
+        barStyle={isDarkMode ? "light-content" : "dark-content"}
       />
+
       <RootNavigator />
     </SafeAreaView>
   );
@@ -27,10 +27,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    // <SafeAreaProvider>
     <ThemeProvider>
       <AppContent />
     </ThemeProvider>
-    // </SafeAreaProvider>
   );
 }
