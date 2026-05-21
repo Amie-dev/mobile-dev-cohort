@@ -1,12 +1,4 @@
-export type FoodSchema = {
-  id: string;
-
-  // Food
-  foodName: string;
-  foodDescription: string;
-
-  foodCategory:
-    | "Pizza"
+export type foodCategorySchema="Pizza"
     | "Burger"
     | "Biryani"
     | "Dessert"
@@ -16,6 +8,14 @@ export type FoodSchema = {
     | "Indian"
     | "Chinese"
     | "Fast Food";
+export type FoodSchema = {
+  id: string;
+
+  // Food
+  foodName: string;
+  foodDescription: string;
+
+  foodCategory:foodCategorySchema,
 
   foodImage: string;
 
