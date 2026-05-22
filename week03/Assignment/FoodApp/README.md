@@ -1,7 +1,12 @@
-
 # 🍔 Food Delivery App
 
 A modern React Native food delivery application built with Expo, React Navigation, Context API, and TypeScript.
+
+---
+
+## 🎥 Demo Video
+
+[Watch Demo](https://x.com/AminulIsla65775/status/2057687124049334692)
 
 ---
 
@@ -28,8 +33,8 @@ A modern React Native food delivery application built with Expo, React Navigatio
 - Dynamic Theme System (Dark/Light)
 
 ## Utilities
-- Safe Area Context
-- Expo Navigation Bar
+- react-native-safe-area-context
+- expo-navigation-bar
 
 ---
 
@@ -42,19 +47,17 @@ src
 │   ├── Food
 │   ├── Header
 │   ├── Order
-│   └── ...
 │
 ├── constants
 │   ├── Colors.ts
 │   ├── foodData.ts
-│   └── ...
 │
 ├── context
 │   ├── ThemeContext.tsx
 │   ├── AuthContext.tsx
-│   └── ...
 │
 ├── navigator
+│   ├── Auth
 │   ├── tabs
 │   ├── stack
 │   ├── drawer
@@ -66,7 +69,6 @@ src
 │   ├── OrderScreen.tsx
 │   ├── ProfileScreen.tsx
 │   ├── SettingsScreen.tsx
-│   └── ...
 │
 └── assets
 ````
@@ -157,9 +159,7 @@ TabNavigator : AuthStack
 @react-navigation/drawer
 
 react-native-safe-area-context
-
 @expo/vector-icons
-
 expo-navigation-bar
 ```
 
@@ -172,22 +172,6 @@ expo-navigation-bar
 * Floating Action Buttons
 * Soft Shadows
 * Premium Dark Theme
-* Dribbble Inspired Design
-
----
-
-# 🛠 Future Improvements
-
-* Real Authentication
-* Backend Integration
-* Cart Management
-* Payment Gateway
-* Realtime Order Tracking
-* Push Notifications
-* API Integration
-* Database Support
-* Redux/Zustand State Management
-* Performance Optimization
 
 ---
 
@@ -195,4 +179,3 @@ expo-navigation-bar
 
 Built with ❤️ using React Native & Expo.
 
-```
