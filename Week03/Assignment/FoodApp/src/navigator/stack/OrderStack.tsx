@@ -9,7 +9,7 @@ const OrderStack = () => {
     <Stack.Navigator screenOptions={{
       headerShown:false
     }}>
-      <Stack.Screen name='order' component={OrderScreen} />
+      <Stack.Screen name='Orders' component={OrderScreen} />
     </Stack.Navigator>
   )
 }

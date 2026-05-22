@@ -6,9 +6,12 @@ import {
 
 import TabNavigator from "./tabs/TabNavigator";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
+import AuthStack from "./Auth/AuthStack";
 
 const RootNavigator = () => {
   const { theme, isDarkMode } = useTheme();
+  const { isAuthenticated, login, logout } = useAuth();
 
   const navigationTheme = {
     ...(isDarkMode ? DarkTheme : DefaultTheme),
@@ -25,7 +28,7 @@ const RootNavigator = () => {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <TabNavigator />
+      {isAuthenticated ? <TabNavigator /> : <AuthStack />}
     </NavigationContainer>
   );
 };

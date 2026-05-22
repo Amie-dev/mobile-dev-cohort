@@ -67,13 +67,13 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, focused }: any) => {
           let iconName: keyof typeof Ionicons.glyphMap = "home-outline";
 
-          if (route.name === "Home") {
+          if (route.name === "HomeTab") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Search") {
+          } else if (route.name === "SearchTab") {
             iconName = focused ? "search" : "search-outline";
-          } else if (route.name === "Order") {
+          } else if (route.name === "OrderTab") {
             iconName = focused ? "receipt" : "receipt-outline";
-          } else if (route.name === "Profile") {
+          } else if (route.name === "ProfileTab") {
             iconName = focused ? "person" : "person-outline";
           }
 
@@ -82,22 +82,41 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeStack}
         options={({ route }: any) => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
-
+console.log(routeName)
           return {
+            title: "Home",
             tabBarStyle:
               routeName !== "Home" ? { display: "none" } : tabBarBaseStyle,
           };
         }}
       />
 
-      <Tab.Screen name="Search" component={SearchStack} />
-      <Tab.Screen name="Order" component={OrderStack} />
+      <Tab.Screen
+        name="SearchTab"
+        component={SearchStack}
+        options={{
+          title: "Search",
+        }}
+      />
+      <Tab.Screen
+        name="OrderTab"
+        component={OrderStack}
+        options={{
+          title: "Order",
+        }}
+      />
       {/* <Tab.Screen name="Profile" component={ProfileStack} /> */}
-      <Tab.Screen name="Profile" component={ProfileDrawer} />
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileDrawer}
+        options={{
+          title: "Profile",
+        }}
+      />
     </Tab.Navigator>
   );
 };

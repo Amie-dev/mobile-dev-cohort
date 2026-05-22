@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../../screens/HomeStackScreen/HomeScreen";
-import ProfileScreen from "../../screens/HomeStackScreen/FoodScreen";
-import { useTheme } from "../../context/ThemeContext";
-import HomeScreenHeader from "../../components/Home/HomeScreenHeader";
 import FoodScreen from "../../screens/HomeStackScreen/FoodScreen";
+import HomeScreenHeader from "../../components/Home/HomeScreenHeader";
+import { useTheme } from "../../context/ThemeContext";
+import FoodHeader from "../../components/Food/FoodHeader";
 
 const Stack = createNativeStackNavigator();
 
 export default function HomeStack() {
-  const { isDarkMode, theme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Stack.Navigator
@@ -17,14 +17,11 @@ export default function HomeStack() {
       screenOptions={{
         headerTitleAlign: "center",
         headerShadowVisible: false,
-        headerShown:true,
         headerStyle: {
           backgroundColor: theme.tabBg,
-          
         },
         headerTintColor: theme.secondaryText,
         headerTitleStyle: {
-
           fontSize: 16,
           fontWeight: "700",
         },
@@ -34,8 +31,7 @@ export default function HomeStack() {
         name="Home"
         component={HomeScreen}
         options={{
-          title: "Food Home",
-          header:({navigation,route})=><HomeScreenHeader/>
+          header: () => <HomeScreenHeader />,
         }}
       />
 
@@ -45,20 +41,9 @@ export default function HomeStack() {
         options={{
           title: "Food Item",
           headerBackTitle: "Back",
+          header:()=><FoodHeader/>
         }}
       />
     </Stack.Navigator>
   );
 }
-
-/*
-
-<Stack.Screen
-  name="Home"
-  component={HomeScreen}
-  options={{
-    header: () => <YourCustomHeader title="Food Home" />,
-  }}
-/>
-
-*/

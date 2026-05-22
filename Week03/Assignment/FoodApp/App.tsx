@@ -5,6 +5,7 @@ import { StatusBar } from "react-native";
 
 import RootNavigator from "./src/navigator/RootNavigator";
 import { ThemeProvider, useTheme } from "./src/context/ThemeContext";
+import AuthProvider from "./src/context/AuthContext";
 
 function AppContent() {
   const { isDarkMode, theme } = useTheme();
@@ -27,8 +28,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
