@@ -10,6 +10,52 @@ A modern React Native food delivery application built with Expo, React Navigatio
 
 ---
 
+# ▶️ Run Locally
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/Amie-dev/mobile-dev-cohort
+```
+
+---
+
+## 2. Move Inside Project Folder
+
+```bash
+cd mobile-dev-cohort/week03/Assignment/FoodApp
+```
+
+---
+
+## 3. Install Dependencies
+
+```bash
+bun install
+```
+
+or
+
+```bash
+npm install
+```
+
+---
+
+## 4. Start Development Server
+
+```bash
+bunx expo start
+```
+
+or
+
+```bash
+npx expo start
+```
+
+---
+
 # 🚀 Tech Stack
 
 ## Core
