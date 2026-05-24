@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, ScrollView } from "react-native";
 
 export default function Index() {
   const [output, setOutput] = useState("Loading...");
-
+  const [data, setData] = useState<any>();
 
   async function callApi(label: string, url: string, options?: RequestInit) {
     setOutput(`${label}\n\nLoading...`);
@@ -23,7 +23,7 @@ export default function Index() {
      
     // Optionally call your API here:
     callApi("GET /api/users", "/api/users");
-
+    
   }, []);
 
   return (
