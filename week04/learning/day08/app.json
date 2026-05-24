@@ -8,7 +8,7 @@
     "scheme": "day08",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +32,20 @@
           "android": {
             "image": "./assets/images/splash-icon.png",
             "imageWidth": 76
+          },
+          "ios": {
+            "image": "./assets/images/splash-icon.png",
+            "imageWidth": 76
           }
+        }
+      ],
+      "expo-secure-store",
+      "expo-sqlite",
+      [
+        "expo-file-system",
+        {
+          "supportsOpeningDocumentsInPlace": true,
+          "enableFileSharing": true
         }
       ]
     ],
