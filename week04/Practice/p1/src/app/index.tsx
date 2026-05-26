@@ -54,6 +54,26 @@ export default function Index() {
           </Text>
         </Link>
       </View>
+      <View
+        style={{
+          backgroundColor: "rgba(1, 22, 1, 0.8)",
+          padding: 10,
+          borderRadius: 20,
+          margin: 10,
+        }}
+      >
+        <Link href={"/sql-lite-drizzle"}>
+          <Text
+            style={{
+              color: "#ddd2d2",
+              fontWeight: "bold",
+              padding: 10,
+            }}
+          >
+            SQL Lite Drizzle
+          </Text>
+        </Link>
+      </View>
     </View>
   );
 }
