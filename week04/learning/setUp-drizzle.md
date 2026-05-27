@@ -180,6 +180,9 @@ Install required Babel packages:
 
 ```bash
 npm install -D babel-plugin-inline-import babel-preset-expo
+
+npm install -D babel-plugin-inline-import
+npx expo install babel-preset-expo
 ```
 
 Create or update:
