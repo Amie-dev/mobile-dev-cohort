@@ -4,6 +4,8 @@ import { Stack } from "expo-router";
 import * as NavigationBar from "expo-navigation-bar";
 
 import { ThemeProvider, useTheme } from "@/context/ThemeContext";
+import { SnippetProvider } from "@/context/SnippetContext";
+import { FileProvider } from "@/context/FileContext";
 
 function AppContent() {
   const { isDarkMode, theme } = useTheme();
@@ -15,10 +17,12 @@ function AppContent() {
   }, [isDarkMode]);
 
   return (
-    <View style={{
-       flex: 1, 
-       backgroundColor: theme.background 
-       }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.background,
+      }}
+    >
       <StatusBar
         backgroundColor={theme.background}
         barStyle={isDarkMode ? "light-content" : "dark-content"}
@@ -84,7 +88,11 @@ function AppContent() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <SnippetProvider>
+        <FileProvider>
+          <AppContent />
+        </FileProvider>
+      </SnippetProvider>
     </ThemeProvider>
   );
 }
