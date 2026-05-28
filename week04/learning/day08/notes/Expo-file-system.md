@@ -1,45 +1,40 @@
-# 📁 Complete Expo FileSystem Notes
+# 📁 Complete Modern Expo FileSystem Notes
 
-# Expo File System in React Native / Expo
+# React Native / Expo File Management (Deep Dive)
 
 ---
 
 # 📖 Introduction
 
-Mobile applications often need to work with files.
+Modern mobile apps constantly work with files.
 
 Examples:
 
-* Download PDFs
-* Save images
-* Cache videos
-* Upload documents
-* Store reports
-* Manage folders
-* Read/write local files
+* Downloading PDFs
+* Saving images/videos
+* Exporting reports
+* Uploading documents
+* Caching media
+* Managing offline content
 
-Expo provides:
+To handle these operations in Expo apps, we use:
 
 # 🚀 Expo FileSystem
-
-to handle these operations.
 
 ---
 
 # 🧠 What is Expo FileSystem?
 
-Expo FileSystem is a module that allows React Native / Expo apps to interact with files and directories inside the device.
+Expo FileSystem is a module that allows React Native / Expo apps to work with:
 
-It helps apps:
+✅ Files
+✅ Folders
+✅ Downloads
+✅ Uploads
+✅ Cache
+✅ Device storage
 
-✅ Create files
-✅ Read files
-✅ Write files
-✅ Delete files
-✅ Move/copy files
-✅ Download files
-✅ Upload files
-✅ Manage folders
+inside the app sandbox.
 
 ---
 
@@ -51,82 +46,107 @@ Expo FileSystem = local file manager for Expo apps.
 
 # 📦 Installation
 
-## Expo
-
-```bash id="0o4j7h"
+```bash id="z9p9e4"
 npx expo install expo-file-system
 ```
 
 ---
 
-# 📥 Import
+# 📥 Modern Import
 
-```js id="4m0vsz"
-import * as FileSystem from "expo-file-system";
+```js id="7mjlwm"
+import {
+  File,
+  Directory,
+  Paths,
+} from "expo-file-system";
 ```
 
 ---
 
-# 🚀 Why FileSystem is Important?
+# 🧠 Modern Expo FileSystem API
 
-Many apps need local file handling.
+Expo introduced a cleaner object-oriented API.
 
-Examples:
+Instead of:
 
-| App Type       | File Usage    |
-| -------------- | ------------- |
-| WhatsApp       | Images/videos |
-| Notes App      | Export files  |
-| Music App      | Offline songs |
-| E-learning App | Download PDFs |
-| Camera App     | Store photos  |
-| Chat App       | Media cache   |
+```js id="6h4mzp"
+FileSystem.writeAsStringAsync()
+```
+
+Now we use:
+
+```js id="8dxnfg"
+file.write()
+```
+
+This modern API is:
+
+✅ Cleaner
+✅ Easier to read
+✅ Easier to maintain
+✅ More scalable
 
 ---
 
-# 📂 Core Concepts
+# 🚀 Core Parts of Modern API
+
+| API       | Purpose             |
+| --------- | ------------------- |
+| File      | Work with files     |
+| Directory | Work with folders   |
+| Paths     | Access system paths |
 
 ---
 
-# 1️⃣ File Path
+# 🧠 Understanding the File System
 
-Every file has a unique path.
+---
 
-Example:
+# 📂 Real World Analogy
 
-```txt id="4r5bkl"
-file://data/user/0/app/files/
+Think about your laptop:
+
+```txt id="0ngvte"
+Documents/
+Images/
+Videos/
+Downloads/
+```
+
+Mobile apps also work similarly.
+
+---
+
+# 📂 FileSystem Structure
+
+```txt id="5k3wtg"
+App Sandbox
+    ↓
+Folders
+    ↓
+Files
 ```
 
 ---
 
-# 📌 File URI
-
-Files are usually accessed using:
-
-```txt id="b17r6w"
-file://
-```
-
-URI format.
+# 🔐 Sandbox System
 
 ---
 
-# 2️⃣ Sandbox System
+# 🧠 What is Sandbox?
 
----
+Mobile apps cannot freely access all device files.
 
-# 🔐 What is Sandbox?
+Each app gets its own protected private storage area.
 
-Mobile apps cannot access all device files directly.
-
-Each app works inside a protected private area called:
+This protected area is called:
 
 # 📦 Sandbox
 
 ---
 
-# 🧠 Why Sandbox Exists?
+# 🚀 Why Sandbox Exists?
 
 For:
 
@@ -134,332 +154,343 @@ For:
 ✅ Privacy
 ✅ App isolation
 
-One app cannot access another app’s private files.
+---
+
+# 📌 Important
+
+One app CANNOT directly access another app’s private files.
 
 ---
 
-# 📂 Sandbox Structure
-
-```txt id="w0r3fi"
-Your App
-   ↓
-Private Sandbox
-   ↓
-Files & Folders
-```
+# 🧠 Understanding Paths
 
 ---
 
-# 🚀 Important Directories
+# 🚀 What is `Paths`?
 
-Expo FileSystem provides useful directories.
+`Paths` provides access to important app directories.
 
 ---
 
-# 📂 documentDirectory
+# 📂 Common Paths
 
-Permanent app storage.
+| Path           | Purpose           |
+| -------------- | ----------------- |
+| Paths.document | Permanent storage |
+| Paths.cache    | Temporary storage |
+
+---
+
+# 📂 Paths.document
+
+Permanent storage.
 
 Used for:
 
-* Saved files
-* User documents
-* Downloaded PDFs
-* Offline data
+✅ User documents
+✅ PDFs
+✅ Saved exports
+✅ Important files
 
 ---
 
-# 📂 cacheDirectory
+# 📂 Paths.cache
 
 Temporary storage.
 
 Used for:
 
-* Cached images
-* Temporary downloads
-* Reusable files
+✅ Cached images
+✅ Temporary downloads
+✅ Reusable files
 
 ---
 
-# 🔥 Difference
+# ⚠️ Important Difference
 
-| Directory         | Purpose           |
-| ----------------- | ----------------- |
-| documentDirectory | Permanent storage |
-| cacheDirectory    | Temporary storage |
-
----
-
-# ⚠️ Lifecycle
-
-| Event         | documentDirectory | cacheDirectory |
-| ------------- | ----------------- | -------------- |
-| App restart   | ✅ Stays           | ⚠️ May clear   |
-| Device reboot | ✅ Stays           | ⚠️ May clear   |
-| App uninstall | ❌ Deleted         | ❌ Deleted      |
-
----
-
-# 📌 Directory Example
-
-```js id="z1x1n8"
-console.log(
-  FileSystem.documentDirectory
-);
-```
-
-Example output:
-
-```txt id="tfdkt8"
-file:///data/user/0/app/files/
-```
-
----
-
-# 🚀 Core File Operations
-
-| Operation     | Purpose            |
-| ------------- | ------------------ |
-| Read file     | Get file data      |
-| Write file    | Save data          |
-| Delete file   | Remove file        |
-| Move file     | Change location    |
-| Copy file     | Duplicate file     |
-| Upload file   | Send to server     |
-| Download file | Save from internet |
-
----
-
-# 1️⃣ Create & Write File
-
----
-
-# ✅ writeAsStringAsync()
-
-Used to create/write files.
+| Feature              | document        | cache           |
+| -------------------- | --------------- | --------------- |
+| Permanent            | ✅ Yes           | ❌ No            |
+| Auto delete possible | ❌ Rare          | ✅ Yes           |
+| Best for             | Important files | Temporary files |
 
 ---
 
 # 📌 Example
 
-```js id="3t5mg3"
-const path =
-  FileSystem.documentDirectory +
-  "hello.txt";
-
-await FileSystem.writeAsStringAsync(
-  path,
-  "Hello World"
-);
-```
-
----
-
-# 🧠 What Happens?
-
-```txt id="9lfh7f"
-documentDirectory
-       +
-hello.txt
-       ↓
-Creates file
-       ↓
-Writes text
-```
-
----
-
-# 🚀 Read File
-
----
-
-# ✅ readAsStringAsync()
-
-Used to read file content.
-
----
-
-# 📌 Example
-
-```js id="m6x8w6"
-const data =
-  await FileSystem.readAsStringAsync(
-    path
-  );
-
-console.log(data);
-```
-
----
-
-# 📱 Output
-
-```txt id="0z8n3w"
-Hello World
-```
-
----
-
-# 🚀 Delete File
-
----
-
-# ✅ deleteAsync()
-
-Used to remove files.
-
----
-
-# 📌 Example
-
-```js id="r5n5t4"
-await FileSystem.deleteAsync(path);
-```
-
----
-
-# 🚀 Check File Info
-
----
-
-# ✅ getInfoAsync()
-
-Used to check file existence/details.
-
----
-
-# 📌 Example
-
-```js id="g4z6gg"
-const info =
-  await FileSystem.getInfoAsync(path);
-
-console.log(info);
+```js id="6jff1r"
+console.log(Paths.document);
+console.log(Paths.cache);
 ```
 
 ---
 
 # 📱 Example Output
 
-```js id="vlwyzn"
-{
-  exists: true,
-  isDirectory: false,
-  size: 120
-}
+```txt id="y9fkso"
+file:///data/user/0/app/files/
 ```
 
 ---
 
-# 🚀 Create Folder
+# 🚀 Understanding `File`
 
 ---
 
-# ✅ makeDirectoryAsync()
+# 🧠 What is File?
 
-Creates folders.
+`File` represents a single file.
+
+Examples:
+
+* note.txt
+* image.jpg
+* report.pdf
+* video.mp4
 
 ---
 
-# 📌 Example
+# 📂 Create File Object
 
-```js id="6qxtjc"
-const folder =
-  FileSystem.documentDirectory +
-  "notes/";
+---
 
-await FileSystem.makeDirectoryAsync(
-  folder
+# ✅ Syntax
+
+```js id="h1sq4v"
+const file = new File(path, name);
+```
+
+---
+
+# ✅ Example
+
+```js id="cbsypv"
+const file = new File(
+  Paths.document,
+  "note.txt"
 );
 ```
 
 ---
 
-# 🚀 Read Folder Files
+# 🧠 Important
+
+This only creates a file reference.
+
+The actual file gets created after writing data.
 
 ---
 
-# ✅ readDirectoryAsync()
+# 🚀 File Properties
 
-Reads folder contents.
+| Property  | Meaning            |
+| --------- | ------------------ |
+| exists    | File exists or not |
+| uri       | File path          |
+| name      | File name          |
+| extension | File extension     |
+| size      | File size          |
 
 ---
 
-# 📌 Example
+# ✅ Example
 
-```js id="6y8h7g"
-const files =
-  await FileSystem.readDirectoryAsync(
-    FileSystem.documentDirectory
-  );
-
-console.log(files);
+```js id="7v4r38"
+console.log(file.exists);
+console.log(file.uri);
+console.log(file.name);
 ```
 
 ---
 
-# 🚀 Move File
+# 🚀 File Methods
+
+| Method              | Purpose           |
+| ------------------- | ----------------- |
+| write()             | Write file        |
+| text()              | Read text         |
+| delete()            | Delete file       |
+| copy()              | Copy file         |
+| move()              | Move file         |
+| create()            | Create empty file |
+| downloadFileAsync() | Download file     |
 
 ---
 
-# ✅ moveAsync()
+# 1️⃣ create()
+
+Creates empty file.
+
+---
+
+# ✅ Example
+
+```js id="l8jlwm"
+file.create();
+```
+
+---
+
+# 📌 Result
+
+```txt id="ygp3rw"
+note.txt
+```
+
+gets created.
+
+---
+
+# 🚀 2️⃣ write()
+
+Used to write data into file.
+
+---
+
+# ✅ Example
+
+```js id="gbw19v"
+file.write("Hello World");
+```
+
+---
+
+# 🧠 What Happens?
+
+```txt id="x41brg"
+File created
+      ↓
+Text written
+      ↓
+Saved into storage
+```
+
+---
+
+# 🚀 3️⃣ text()
+
+Reads text content from file.
+
+---
+
+# ✅ Example
+
+```js id="bshwj7"
+const content = file.text();
+
+console.log(content);
+```
+
+---
+
+# 📱 Output
+
+```txt id="94c31l"
+Hello World
+```
+
+---
+
+# 🚀 4️⃣ delete()
+
+Deletes file permanently.
+
+---
+
+# ✅ Example
+
+```js id="c5ohye"
+file.delete();
+```
+
+---
+
+# ⚠️ Warning
+
+Deleted files cannot be recovered.
+
+---
+
+# 🚀 5️⃣ copy()
+
+Creates duplicate file.
+
+---
+
+# ✅ Example
+
+```js id="v6fjxv"
+const copiedFile = new File(
+  Paths.document,
+  "copy.txt"
+);
+
+file.copy(copiedFile);
+```
+
+---
+
+# 📂 Result
+
+```txt id="f8bjzj"
+note.txt
+copy.txt
+```
+
+Both files exist.
+
+---
+
+# 🚀 6️⃣ move()
 
 Moves file to another location.
 
 ---
 
-# 📌 Example
+# ✅ Example
 
-```js id="0uvy9r"
-await FileSystem.moveAsync({
-  from: oldPath,
-  to: newPath,
-});
+```js id="bvf4rg"
+const movedFile = new File(
+  Paths.cache,
+  "moved.txt"
+);
+
+file.move(movedFile);
 ```
 
 ---
 
-# 🚀 Copy File
+# 📌 Result
+
+Original file disappears.
 
 ---
 
-# ✅ copyAsync()
+# 🧠 Difference Between Copy & Move
 
-Duplicates files.
-
----
-
-# 📌 Example
-
-```js id="z69r8x"
-await FileSystem.copyAsync({
-  from: source,
-  to: destination,
-});
-```
+| Method | Result            |
+| ------ | ----------------- |
+| copy() | Duplicate created |
+| move() | Original removed  |
 
 ---
 
-# 🚀 Download File
+# 🚀 7️⃣ downloadFileAsync()
+
+Downloads file from internet.
 
 ---
 
-# ✅ downloadAsync()
+# ✅ Example
 
-Downloads files from internet.
+```js id="oqfpfu"
+const imageFile = new File(
+  Paths.cache,
+  "image.jpg"
+);
 
----
-
-# 📌 Example
-
-```js id="m5mjlwm"
-const fileUri =
-  FileSystem.documentDirectory +
-  "image.jpg";
-
-await FileSystem.downloadAsync(
-  "https://picsum.photos/300",
-  fileUri
+await imageFile.downloadFileAsync(
+  "https://picsum.photos/300"
 );
 ```
 
@@ -467,146 +498,245 @@ await FileSystem.downloadAsync(
 
 # 🧠 Download Flow
 
-```txt id="9l6c5o"
+```txt id="pjkfdp"
 Internet File
       ↓
-downloadAsync()
+Download
       ↓
-Saved into device storage
+Saved inside app storage
 ```
 
 ---
 
-# 🚀 Upload File
-
-Files can also be uploaded to servers.
+# 🚀 Understanding `Directory`
 
 ---
 
-# 📌 Example
+# 🧠 What is Directory?
 
-```js id="0l9n2o"
-await FileSystem.uploadAsync(
-  "https://example.com/upload",
-  fileUri
+`Directory` represents folders.
+
+Used for:
+
+✅ Create folders
+✅ Organize files
+✅ List folder files
+✅ Delete folders
+
+---
+
+# 📂 Create Directory Object
+
+---
+
+# ✅ Example
+
+```js id="i3m9b7"
+const notesDir = new Directory(
+  Paths.document,
+  "notes"
 );
 ```
 
 ---
 
-# 🚀 Full Example
+# 🚀 Directory Properties
+
+| Property | Meaning       |
+| -------- | ------------- |
+| exists   | Folder exists |
+| uri      | Folder path   |
+| name     | Folder name   |
 
 ---
 
-# ✅ Create + Read File
+# 🚀 Directory Methods
 
-```js id="9i2l5u"
-import * as FileSystem from "expo-file-system";
+| Method   | Purpose              |
+| -------- | -------------------- |
+| create() | Create folder        |
+| delete() | Delete folder        |
+| list()   | Read folder contents |
+| move()   | Move folder          |
+| copy()   | Copy folder          |
 
-const path =
-  FileSystem.documentDirectory +
-  "note.txt";
+---
 
-// Write file
-await FileSystem.writeAsStringAsync(
-  path,
-  "Learning Expo FileSystem"
+# 1️⃣ create()
+
+Creates folder.
+
+---
+
+# ✅ Example
+
+```js id="k9pxqh"
+notesDir.create();
+```
+
+---
+
+# 📂 Result
+
+```txt id="lzj2rk"
+document/
+   notes/
+```
+
+---
+
+# 🚀 2️⃣ list()
+
+Reads folder contents.
+
+---
+
+# ✅ Example
+
+```js id="8eg7hj"
+const files = notesDir.list();
+
+console.log(files);
+```
+
+---
+
+# 📱 Example Output
+
+```js id="jlwmgn"
+[
+  "note1.txt",
+  "note2.txt"
+]
+```
+
+---
+
+# 🚀 3️⃣ delete()
+
+Deletes folder and contents.
+
+---
+
+# ✅ Example
+
+```js id="b7szib"
+notesDir.delete();
+```
+
+---
+
+# ⚠️ Warning
+
+All files inside folder also get deleted.
+
+---
+
+# 🚀 Full Practical Example
+
+---
+
+# ✅ Notes App Storage Example
+
+```js id="1hbzv5"
+import {
+  File,
+  Directory,
+  Paths,
+} from "expo-file-system";
+
+// Create notes directory
+const notesDir = new Directory(
+  Paths.document,
+  "notes"
 );
 
-// Read file
-const data =
-  await FileSystem.readAsStringAsync(
-    path
-  );
+if (!notesDir.exists) {
+  notesDir.create();
+}
 
-console.log(data);
+// Create note file
+const noteFile = new File(
+  notesDir,
+  "note1.txt"
+);
+
+// Write note
+noteFile.write(
+  "Learning modern Expo FileSystem"
+);
+
+// Read note
+const content = noteFile.text();
+
+console.log(content);
 ```
 
 ---
 
 # 📱 Output
 
-```txt id="7a0g4j"
-Learning Expo FileSystem
+```txt id="ejlly5"
+Learning modern Expo FileSystem
 ```
-
----
-
-# 🚀 Image Cache Example
-
----
-
-# 📌 Download Image
-
-```js id="fyxywh"
-const imagePath =
-  FileSystem.cacheDirectory +
-  "profile.jpg";
-
-await FileSystem.downloadAsync(
-  imageUrl,
-  imagePath
-);
-```
-
----
-
-# 🧠 Why Cache Images?
-
-Benefits:
-
-✅ Faster loading
-✅ Offline viewing
-✅ Reduced API calls
 
 ---
 
 # 🚀 FileSystem + Offline Apps
 
-FileSystem is heavily used for:
-
-* Offline downloads
-* Cached media
-* Offline learning apps
-* Saved documents
+FileSystem is extremely important for offline apps.
 
 ---
 
 # 📂 Offline Flow
 
-```txt id="n0x3vr"
+```txt id="r08smt"
 Internet Available
       ↓
-Download File
+Download Files
       ↓
-Store in FileSystem
+Store Locally
       ↓
-Offline Access Later
+Internet Lost
+      ↓
+Still Access Files
 ```
 
 ---
 
-# 🚀 FileSystem + Camera
-
-Camera photos are usually stored using FileSystem.
+# 🚀 FileSystem + Image Caching
 
 ---
 
-# 📌 Example Flow
+# 📌 Why Cache Images?
 
-```txt id="7mrr08"
-Take Photo
-    ↓
-Get File URI
-    ↓
-Save to documentDirectory
+Benefits:
+
+✅ Faster loading
+✅ Better UX
+✅ Reduced network usage
+✅ Offline viewing
+
+---
+
+# ✅ Example
+
+```js id="x95mtw"
+const cachedImage = new File(
+  Paths.cache,
+  "profile.jpg"
+);
+
+await cachedImage.downloadFileAsync(
+  imageUrl
+);
 ```
 
 ---
 
 # 🚀 FileSystem + SQLite
 
-Large apps often combine:
+Large apps usually combine:
 
 | Technology | Purpose         |
 | ---------- | --------------- |
@@ -624,14 +754,26 @@ Large apps often combine:
 
 ---
 
+# 🚀 Real World App Examples
+
+| App          | FileSystem Usage  |
+| ------------ | ----------------- |
+| WhatsApp     | Media storage     |
+| Spotify      | Offline songs     |
+| Netflix      | Downloaded videos |
+| Notes App    | Exported files    |
+| Learning App | Offline PDFs      |
+
+---
+
 # ⚠️ Common Beginner Mistakes
 
-| Mistake                        | Problem          |
-| ------------------------------ | ---------------- |
-| Using wrong path               | File not found   |
-| Forgetting await               | Promise issues   |
-| Storing huge files carelessly  | Storage problems |
-| Using cache for permanent data | Data loss        |
+| Mistake                         | Problem        |
+| ------------------------------- | -------------- |
+| Using cache for important files | Data loss      |
+| Forgetting existence check      | Runtime errors |
+| Confusing File vs Directory     | Logic bugs     |
+| Storing too many large files    | Storage issues |
 
 ---
 
@@ -639,7 +781,18 @@ Large apps often combine:
 
 ---
 
-# ✅ Use cacheDirectory for temporary files
+# ✅ Use `Paths.document` for permanent files
+
+Examples:
+
+* PDFs
+* Reports
+* Notes
+* Saved exports
+
+---
+
+# ✅ Use `Paths.cache` for temporary files
 
 Examples:
 
@@ -648,34 +801,33 @@ Examples:
 
 ---
 
-# ✅ Use documentDirectory for permanent files
+# ✅ Organize Files Properly
 
-Examples:
+Good structure:
 
-* PDFs
-* Saved notes
-* Exported reports
+```txt id="q2tjlwm"
+documents/
+   images/
+   videos/
+   notes/
+   downloads/
+```
 
 ---
 
-# ✅ Check File Existence
+# ✅ Check Existence Before Reading
 
-Before reading files.
-
-```js id="8w44xz"
-const info =
-  await FileSystem.getInfoAsync(path);
-
-if (info.exists) {
-  console.log("File exists");
+```js id="u1ur3j"
+if (file.exists) {
+  console.log(file.text());
 }
 ```
 
 ---
 
-# ✅ Clean Unused Cache
+# ✅ Clean Old Cache
 
-Too much cache wastes storage.
+Unused cache wastes storage.
 
 ---
 
@@ -685,40 +837,18 @@ Too much cache wastes storage.
 | ------------- | --------------- |
 | App restart   | ✅ Usually stays |
 | Device reboot | ✅ Usually stays |
-| App uninstall | ❌ Files removed |
+| App uninstall | ❌ Removed       |
 
 ---
 
-# 🔥 FileSystem vs AsyncStorage
+# 🔥 Modern API vs Old API
 
-| Feature           | FileSystem  | AsyncStorage |
-| ----------------- | ----------- | ------------ |
-| File handling     | ✅ Yes       | ❌ No         |
-| Large media       | ✅ Good      | ❌ Bad        |
-| Key-value storage | ❌ No        | ✅ Yes        |
-| Images/videos     | ✅ Excellent | ❌ Poor       |
-
----
-
-# 🔥 FileSystem vs SQLite
-
-| Feature             | FileSystem | SQLite      |
-| ------------------- | ---------- | ----------- |
-| Media files         | ✅ Best     | ❌ Not ideal |
-| Structured data     | ❌ Weak     | ✅ Excellent |
-| Searching/filtering | ❌ Limited  | ✅ Powerful  |
-
----
-
-# 📱 Real World Examples
-
-| Feature          | Technology |
-| ---------------- | ---------- |
-| Offline PDFs     | FileSystem |
-| Downloaded songs | FileSystem |
-| Cached images    | FileSystem |
-| Chat media       | FileSystem |
-| Notes database   | SQLite     |
+| Old API            | Modern API     |
+| ------------------ | -------------- |
+| writeAsStringAsync | file.write()   |
+| readAsStringAsync  | file.text()    |
+| documentDirectory  | Paths.document |
+| cacheDirectory     | Paths.cache    |
 
 ---
 
@@ -726,30 +856,40 @@ Too much cache wastes storage.
 
 Today we learned:
 
-✅ What Expo FileSystem is
-✅ Installation & setup
+✅ Modern Expo FileSystem
+✅ File class
+✅ Directory class
+✅ Paths API
 ✅ Sandbox system
-✅ documentDirectory
-✅ cacheDirectory
-✅ Read/write files
-✅ Delete/copy/move files
-✅ Download/upload files
+✅ File creation
+✅ Reading/writing files
+✅ Copy/move/delete
+✅ Downloading files
 ✅ Folder management
-✅ Offline file storage
-✅ Best practices
+✅ Offline file handling
+✅ Cache vs document storage
+✅ Real-world architecture
 
 ---
 
 # 🎯 Final Conclusion
 
-Expo FileSystem is one of the most important modules for handling local files in React Native / Expo apps.
+Modern Expo FileSystem makes file handling much cleaner and easier in React Native / Expo applications.
 
-It helps developers build:
+Using:
 
-✅ Offline apps
-✅ Media-heavy apps
+```js id="d5w5k4"
+File
+Directory
+Paths
+```
+
+developers can build:
+
+✅ Offline-first apps
 ✅ Download systems
+✅ Media-heavy apps
 ✅ File management systems
 ✅ Production-ready mobile applications
 
-Mastering Expo FileSystem is essential for advanced mobile app development 🚀
+Mastering Expo FileSystem is essential for advanced React Native / Expo development 🚀
