@@ -14,10 +14,12 @@
     "@react-navigation/bottom-tabs": "^7.15.5",
     "@react-navigation/elements": "^2.9.10",
     "@react-navigation/native": "^7.1.33",
+    "babel-preset-expo": "~55.0.8",
     "drizzle-orm": "^0.45.2",
     "expo": "~55.0.26",
     "expo-constants": "~55.0.16",
     "expo-device": "~55.0.17",
+    "expo-file-system": "~55.0.22",
     "expo-font": "~55.0.8",
     "expo-glass-effect": "~55.0.11",
     "expo-image": "~55.0.11",
@@ -42,7 +44,7 @@
   "devDependencies": {
     "@types/react": "~19.2.2",
     "babel-plugin-inline-import": "^3.0.0",
-    "babel-preset-expo": "^56.0.12",
+    "babel-preset-expo": "^55.0.08",
     "drizzle-kit": "^0.31.10",
     "typescript": "~5.9.2"
   },
