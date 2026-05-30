@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { eq, like, desc } from "drizzle-orm";
+import { desc, eq, like, or } from "drizzle-orm";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 
 import { db } from "../../db/database";
@@ -19,15 +19,17 @@ type NewSnippet = typeof snippetsTable.$inferInsert;
 type SnippetContextType = {
   snippets: Snippet[];
   loading: boolean;
+  migrationSuccess: boolean;
   error: unknown;
 
   loadSnippets: () => Promise<void>;
-  createSnippet: (snippet: Omit<NewSnippet, "id">) => Promise<void>;
+  createSnippet: (snippet: Omit<NewSnippet, "id">) => Promise<Snippet>;
   updateSnippet: (id: number, snippet: Partial<NewSnippet>) => Promise<void>;
   deleteSnippet: (id: number) => Promise<void>;
   toggleFavorite: (id: number, value: boolean) => Promise<void>;
   searchSnippets: (query: string) => Promise<void>;
   getFavoriteSnippets: () => Promise<void>;
+  getSnippetById: (id: number) => Promise<Snippet | undefined>;
 };
 
 export const SnippetContext = createContext<SnippetContextType | null>(null);
@@ -42,14 +44,16 @@ export const SnippetProvider = ({ children }: Props) => {
 
   const { success, error } = useMigrations(db, migrations);
 
-  // load snippets after migration success
   useEffect(() => {
     if (success) {
       loadSnippets();
     }
-  }, [success]);
 
-  // load all snippets
+    if (error) {
+      console.log("Migration error:", error);
+    }
+  }, [success, error]);
+
   const loadSnippets = async () => {
     try {
       setLoading(true);
@@ -62,22 +66,30 @@ export const SnippetProvider = ({ children }: Props) => {
       setSnippets(result);
     } catch (err) {
       console.log("Load snippets error:", err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // create new snippet
-  const createSnippet = async (snippet: Omit<NewSnippet, "id">) => {
+  const createSnippet = async (
+    snippet: Omit<NewSnippet, "id">
+  ): Promise<Snippet> => {
     try {
-      await db.insert(snippetsTable).values(snippet);
+      const [createdSnippet] = await db
+        .insert(snippetsTable)
+        .values(snippet)
+        .returning();
+
       await loadSnippets();
+
+      return createdSnippet;
     } catch (err) {
       console.log("Create snippet error:", err);
+      throw err;
     }
   };
 
-  // update snippet
   const updateSnippet = async (id: number, snippet: Partial<NewSnippet>) => {
     try {
       await db
@@ -91,20 +103,20 @@ export const SnippetProvider = ({ children }: Props) => {
       await loadSnippets();
     } catch (err) {
       console.log("Update snippet error:", err);
+      throw err;
     }
   };
 
-  // delete snippet
   const deleteSnippet = async (id: number) => {
     try {
       await db.delete(snippetsTable).where(eq(snippetsTable.id, id));
       await loadSnippets();
     } catch (err) {
       console.log("Delete snippet error:", err);
+      throw err;
     }
   };
 
-  // favorite / unfavorite
   const toggleFavorite = async (id: number, value: boolean) => {
     try {
       await db
@@ -118,33 +130,45 @@ export const SnippetProvider = ({ children }: Props) => {
       await loadSnippets();
     } catch (err) {
       console.log("Favorite error:", err);
+      throw err;
     }
   };
 
-  // search snippets by title/code/language
   const searchSnippets = async (query: string) => {
     try {
       setLoading(true);
 
-      if (!query.trim()) {
+      const text = query.trim();
+
+      if (!text) {
         await loadSnippets();
         return;
       }
 
+      const searchText = `%${text}%`;
+
       const result = await db
         .select()
         .from(snippetsTable)
-        .where(like(snippetsTable.title, `%${query}%`));
+        .where(
+          or(
+            like(snippetsTable.title, searchText),
+            like(snippetsTable.code, searchText),
+            like(snippetsTable.language, searchText),
+            like(snippetsTable.tags, searchText)
+          )
+        )
+        .orderBy(desc(snippetsTable.createdAt));
 
       setSnippets(result);
     } catch (err) {
       console.log("Search snippet error:", err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // only favorite snippets
   const getFavoriteSnippets = async () => {
     try {
       setLoading(true);
@@ -152,13 +176,29 @@ export const SnippetProvider = ({ children }: Props) => {
       const result = await db
         .select()
         .from(snippetsTable)
-        .where(eq(snippetsTable.isFavorite, true));
+        .where(eq(snippetsTable.isFavorite, true))
+        .orderBy(desc(snippetsTable.createdAt));
 
       setSnippets(result);
     } catch (err) {
       console.log("Favorite snippets error:", err);
+      throw err;
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getSnippetById = async (id: number) => {
+    try {
+      const [snippet] = await db
+        .select()
+        .from(snippetsTable)
+        .where(eq(snippetsTable.id, id));
+
+      return snippet;
+    } catch (err) {
+      console.log("Get snippet by id error:", err);
+      throw err;
     }
   };
 
@@ -167,6 +207,7 @@ export const SnippetProvider = ({ children }: Props) => {
       value={{
         snippets,
         loading,
+        migrationSuccess: success,
         error,
         loadSnippets,
         createSnippet,
@@ -175,6 +216,7 @@ export const SnippetProvider = ({ children }: Props) => {
         toggleFavorite,
         searchSnippets,
         getFavoriteSnippets,
+        getSnippetById,
       }}
     >
       {children}

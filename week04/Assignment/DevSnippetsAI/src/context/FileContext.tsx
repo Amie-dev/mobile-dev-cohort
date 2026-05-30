@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import * as FileSystem from "expo-file-system";
+import { Directory, File, Paths } from "expo-file-system";
 import { desc, eq } from "drizzle-orm";
 
 import { db } from "../../db/database";
@@ -22,17 +22,15 @@ type FileContextType = {
   loading: boolean;
 
   folders: {
-    root: string;
-    attachments: string;
-    exports: string;
-    templates: string;
+    root: Directory;
+    attachments: Directory;
+    exports: Directory;
+    templates: Directory;
   };
 
   loadFiles: () => Promise<void>;
   createAppFolders: () => Promise<void>;
-
   saveFileRecord: (file: Omit<NewAppFile, "id">) => Promise<void>;
-
   deleteFile: (id: number, uri: string) => Promise<void>;
 
   copyFileToAttachments: (
@@ -56,7 +54,7 @@ type FileContextType = {
     format: ExportFormat;
   }) => Promise<string>;
 
-  readFolder: (folderUri?: string) => Promise<FileSystem.FileInfo[]>;
+  readFolder: (folder?: Directory) => (File | Directory)[];
 };
 
 const FileContext = createContext<FileContextType | null>(null);
@@ -65,10 +63,10 @@ type Props = {
   children: ReactNode;
 };
 
-const ROOT_FOLDER = FileSystem.documentDirectory + "dev-snippets-ai/";
-const ATTACHMENTS_FOLDER = ROOT_FOLDER + "attachments/";
-const EXPORTS_FOLDER = ROOT_FOLDER + "exports/";
-const TEMPLATES_FOLDER = ROOT_FOLDER + "templates/";
+const ROOT_DIR = new Directory(Paths.document, "dev-snippets-ai");
+const ATTACHMENTS_DIR = new Directory(ROOT_DIR, "attachments");
+const EXPORTS_DIR = new Directory(ROOT_DIR, "exports");
+const TEMPLATES_DIR = new Directory(ROOT_DIR, "templates");
 
 export const FileProvider = ({ children }: Props) => {
   const [files, setFiles] = useState<AppFile[]>([]);
@@ -83,24 +81,15 @@ export const FileProvider = ({ children }: Props) => {
     initFiles();
   }, []);
 
+  // create main app folders
   const createAppFolders = async () => {
-    await FileSystem.makeDirectoryAsync(ROOT_FOLDER, {
-      intermediates: true,
-    });
-
-    await FileSystem.makeDirectoryAsync(ATTACHMENTS_FOLDER, {
-      intermediates: true,
-    });
-
-    await FileSystem.makeDirectoryAsync(EXPORTS_FOLDER, {
-      intermediates: true,
-    });
-
-    await FileSystem.makeDirectoryAsync(TEMPLATES_FOLDER, {
-      intermediates: true,
-    });
+    if (!ROOT_DIR.exists) ROOT_DIR.create();
+    if (!ATTACHMENTS_DIR.exists) ATTACHMENTS_DIR.create();
+    if (!EXPORTS_DIR.exists) EXPORTS_DIR.create();
+    if (!TEMPLATES_DIR.exists) TEMPLATES_DIR.create();
   };
 
+  // load file metadata from SQLite
   const loadFiles = async () => {
     try {
       setLoading(true);
@@ -118,6 +107,7 @@ export const FileProvider = ({ children }: Props) => {
     }
   };
 
+  // save metadata in SQLite
   const saveFileRecord = async (file: Omit<NewAppFile, "id">) => {
     try {
       await db.insert(filesTable).values(file);
@@ -127,19 +117,18 @@ export const FileProvider = ({ children }: Props) => {
     }
   };
 
+  // safe file name
   const getSafeFileName = (fileName: string) => {
-    const time = Date.now();
-    return `${time}-${fileName.replace(/\s+/g, "-").toLowerCase()}`;
+    return `${Date.now()}-${fileName.replace(/\s+/g, "-").toLowerCase()}`;
   };
 
+  // delete physical file + db record
   const deleteFile = async (id: number, uri: string) => {
     try {
-      const info = await FileSystem.getInfoAsync(uri);
+      const file = new File(uri);
 
-      if (info.exists) {
-        await FileSystem.deleteAsync(uri, {
-          idempotent: true,
-        });
+      if (file.exists) {
+        file.delete();
       }
 
       await db.delete(filesTable).where(eq(filesTable.id, id));
@@ -149,66 +138,69 @@ export const FileProvider = ({ children }: Props) => {
     }
   };
 
+  // copy file to attachments folder
   const copyFileToAttachments = async (
     fromUri: string,
     fileName: string,
     snippetId?: number
   ) => {
     try {
-      const safeName = getSafeFileName(fileName);
-      const newUri = ATTACHMENTS_FOLDER + safeName;
+      await createAppFolders();
 
-      await FileSystem.copyAsync({
-        from: fromUri,
-        to: newUri,
-      });
+      const sourceFile = new File(fromUri);
+      const safeName = getSafeFileName(fileName);
+      const copiedFile = new File(ATTACHMENTS_DIR, safeName);
+
+      sourceFile.copy(copiedFile);
 
       await saveFileRecord({
         snippetId,
         name: safeName,
-        uri: newUri,
+        uri: copiedFile.uri,
         type: "attachment",
         folder: "attachments",
         createdAt: new Date().toISOString(),
       });
 
-      return newUri;
+      return copiedFile.uri;
     } catch (error) {
       console.log("Copy attachment error:", error);
       throw error;
     }
   };
 
+  // move file to attachments folder
   const moveFileToAttachments = async (
     fromUri: string,
     fileName: string,
     snippetId?: number
   ) => {
     try {
-      const safeName = getSafeFileName(fileName);
-      const newUri = ATTACHMENTS_FOLDER + safeName;
+      await createAppFolders();
 
-      await FileSystem.moveAsync({
-        from: fromUri,
-        to: newUri,
-      });
+      const sourceFile = new File(fromUri);
+      const safeName = getSafeFileName(fileName);
+      const movedFile = new File(ATTACHMENTS_DIR, safeName);
+
+      sourceFile.move(movedFile);
 
       await saveFileRecord({
         snippetId,
         name: safeName,
-        uri: newUri,
+        uri: movedFile.uri,
         type: "attachment",
         folder: "attachments",
         createdAt: new Date().toISOString(),
       });
 
-      return newUri;
+      return movedFile.uri;
     } catch (error) {
       console.log("Move attachment error:", error);
       throw error;
     }
   };
 
+  // export snippet as txt/js/json
   const exportSnippetToFile = async ({
     snippetId,
     title,
@@ -225,9 +217,11 @@ export const FileProvider = ({ children }: Props) => {
     format: ExportFormat;
   }) => {
     try {
+      await createAppFolders();
+
       const safeTitle = title.replace(/\s+/g, "-").toLowerCase();
       const fileName = `${safeTitle}-${Date.now()}.${format}`;
-      const fileUri = EXPORTS_FOLDER + fileName;
+      const exportFile = new File(EXPORTS_DIR, fileName);
 
       let content = code;
 
@@ -245,33 +239,32 @@ export const FileProvider = ({ children }: Props) => {
         );
       }
 
-      await FileSystem.writeAsStringAsync(fileUri, content);
+      exportFile.write(content);
 
       await saveFileRecord({
         snippetId,
         name: fileName,
-        uri: fileUri,
+        uri: exportFile.uri,
         type: format,
         folder: "exports",
         createdAt: new Date().toISOString(),
       });
 
-      return fileUri;
+      return exportFile.uri;
     } catch (error) {
       console.log("Export snippet error:", error);
       throw error;
     }
   };
 
-  const readFolder = async (folderUri = ROOT_FOLDER) => {
+  // read folder files
+  const readFolder = (folder: Directory = ROOT_DIR) => {
     try {
-      const items = await FileSystem.readDirectoryAsync(folderUri);
+      if (!folder.exists) {
+        folder.create();
+      }
 
-      const infoList = await Promise.all(
-        items.map((item) => FileSystem.getInfoAsync(folderUri + item))
-      );
-
-      return infoList;
+      return folder.list();
     } catch (error) {
       console.log("Read folder error:", error);
       return [];
@@ -285,10 +278,10 @@ export const FileProvider = ({ children }: Props) => {
         loading,
 
         folders: {
-          root: ROOT_FOLDER,
-          attachments: ATTACHMENTS_FOLDER,
-          exports: EXPORTS_FOLDER,
-          templates: TEMPLATES_FOLDER,
+          root: ROOT_DIR,
+          attachments: ATTACHMENTS_DIR,
+          exports: EXPORTS_DIR,
+          templates: TEMPLATES_DIR,
         },
 
         loadFiles,

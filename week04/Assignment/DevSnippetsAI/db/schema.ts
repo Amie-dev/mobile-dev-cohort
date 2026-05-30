@@ -4,45 +4,39 @@ import {
   text,
 } from "drizzle-orm/sqlite-core";
 
-// ===============================
-// SNIPPETS TABLE
-// ===============================
+// =====================================
+// SNIPPETS
+// =====================================
 
 export const snippetsTable = sqliteTable("snippets_table", {
-  // primary id
   id: integer("id").primaryKey({ autoIncrement: true }),
 
-  // snippet title
   title: text("title").notNull(),
 
-  // actual code
   code: text("code").notNull(),
 
-  // js / ts / tsx / py etc
+  // js, tsx, py, json...
   language: text("language").notNull(),
 
-  // store tags as JSON string
+  // JSON string
   tags: text("tags").default("[]"),
 
-  // favorite toggle
   isFavorite: integer("is_favorite", {
     mode: "boolean",
   }).default(false),
 
-  // timestamps
   createdAt: text("created_at").notNull(),
 
   updatedAt: text("updated_at").notNull(),
 });
 
-// ===============================
-// FILES TABLE
-// ===============================
+// =====================================
+// FILES
+// =====================================
 
 export const filesTable = sqliteTable("files_table", {
   id: integer("id").primaryKey({ autoIncrement: true }),
 
-  // relation with snippet
   snippetId: integer("snippet_id").references(
     () => snippetsTable.id,
     {
@@ -50,32 +44,52 @@ export const filesTable = sqliteTable("files_table", {
     }
   ),
 
-  // file name
   name: text("name").notNull(),
 
-  // local file uri
   uri: text("uri").notNull(),
 
-  // image / js / txt / json etc
+  // image | txt | js | json
   type: text("type").notNull(),
 
-  // local folder
-  folder: text("folder").default("root"),
+  // attachments | exports | templates
+  folder: text("folder").default("attachments"),
+
+  size: integer("size"),
 
   createdAt: text("created_at").notNull(),
 });
 
-// ===============================
-// SETTINGS TABLE
-// ===============================
+// =====================================
+// AI RESPONSES
+// =====================================
+
+export const aiResponsesTable = sqliteTable("ai_responses_table", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+
+  snippetId: integer("snippet_id")
+    .notNull()
+    .references(() => snippetsTable.id, {
+      onDelete: "cascade",
+    }),
+
+  explanation: text("explanation"),
+
+  summary: text("summary"),
+
+  suggestions: text("suggestions"),
+
+  createdAt: text("created_at").notNull(),
+});
+
+// =====================================
+// SETTINGS
+// =====================================
 
 export const settingsTable = sqliteTable("settings_table", {
   id: integer("id").primaryKey({ autoIncrement: true }),
 
-  // light / dark / system
   theme: text("theme").default("system"),
 
-  // optional settings
   fontSize: integer("font_size").default(14),
 
   updatedAt: text("updated_at").notNull(),

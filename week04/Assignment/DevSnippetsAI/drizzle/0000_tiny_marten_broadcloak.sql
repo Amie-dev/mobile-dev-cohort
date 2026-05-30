@@ -1,10 +1,21 @@
+CREATE TABLE `ai_responses_table` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`snippet_id` integer NOT NULL,
+	`explanation` text,
+	`summary` text,
+	`suggestions` text,
+	`created_at` text NOT NULL,
+	FOREIGN KEY (`snippet_id`) REFERENCES `snippets_table`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
 CREATE TABLE `files_table` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`snippet_id` integer,
 	`name` text NOT NULL,
 	`uri` text NOT NULL,
 	`type` text NOT NULL,
-	`folder` text DEFAULT 'root',
+	`folder` text DEFAULT 'attachments',
+	`size` integer,
 	`created_at` text NOT NULL,
 	FOREIGN KEY (`snippet_id`) REFERENCES `snippets_table`(`id`) ON UPDATE no action ON DELETE cascade
 );
@@ -26,6 +37,3 @@ CREATE TABLE `snippets_table` (
 	`created_at` text NOT NULL,
 	`updated_at` text NOT NULL
 );
---> statement-breakpoint
-DROP TABLE `products_table`;--> statement-breakpoint
-DROP TABLE `users_table`;
