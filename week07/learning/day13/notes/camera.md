@@ -173,22 +173,332 @@ Check permission → Ask permission → Render CameraView
 />
 ```
 
-`CameraView` renders the live camera preview.
+A better documentation table should include:
 
-Common props:
+* **Prop Name**
+* **Possible Values / Type**
+* **Purpose**
+* **Example**
 
-| Prop                     | Use                             |
-| ------------------------ | ------------------------------- |
-| `facing`                 | front or back camera            |
-| `mode`                   | picture or video                |
-| `flash`                  | flash mode for photo            |
-| `enableTorch`            | keeps flashlight on             |
-| `zoom`                   | camera zoom from `0` to `1`     |
-| `mirror`                 | useful for front camera         |
-| `barcodeScannerSettings` | allowed barcode types           |
-| `onBarcodeScanned`       | called when QR/barcode detected |
-| `onCameraReady`          | camera is ready                 |
-| `onMountError`           | camera failed to mount          |
+# `CameraView` Props Reference
+
+`CameraView` renders the live camera preview and provides controls for capturing photos, recording videos, scanning barcodes, and configuring camera behavior.
+
+| Prop                     | Values / Type             | Purpose                             | Example                                            |
+| ------------------------ | ------------------------- | ----------------------------------- | -------------------------------------------------- |
+| `facing`                 | `'front' \| 'back'`       | Select which camera to use          | `facing="back"`                                    |
+| `mode`                   | `'picture' \| 'video'`    | Camera mode                         | `mode="video"`                                     |
+| `flash`                  | `'off' \| 'on' \| 'auto'` | Flash behavior when taking photos   | `flash="auto"`                                     |
+| `enableTorch`            | `boolean`                 | Keep flashlight on during preview   | `enableTorch={true}`                               |
+| `zoom`                   | `number (0-1)`            | Camera zoom level                   | `zoom={0.5}`                                       |
+| `mirror`                 | `boolean`                 | Mirror front camera preview         | `mirror={true}`                                    |
+| `active`                 | `boolean`                 | Start/stop camera preview           | `active={isFocused}`                               |
+| `mute`                   | `boolean`                 | Disable video recording audio       | `mute={true}`                                      |
+| `animateShutter`         | `boolean`                 | Show capture animation              | `animateShutter={true}`                            |
+| `barcodeScannerSettings` | `BarcodeSettings`         | Configure allowed barcode types     | `barcodeScannerSettings={{ barcodeTypes:['qr'] }}` |
+| `onBarcodeScanned`       | `function`                | Trigger when barcode/QR is detected | `onBarcodeScanned={handleScan}`                    |
+| `onCameraReady`          | `function`                | Called when camera is ready         | `onCameraReady={() => setReady(true)}`             |
+| `onMountError`           | `function`                | Called if camera fails to start     | `onMountError={(e)=>console.log(e)}`               |
+
+---
+
+# Camera Selection
+
+### Back Camera
+
+```tsx
+<CameraView
+  facing="back"
+/>
+```
+
+Used for:
+
+* Normal photography
+* QR scanning
+* Document scanning
+* Video recording
+
+---
+
+### Front Camera
+
+```tsx
+<CameraView
+  facing="front"
+/>
+```
+
+Used for:
+
+* Selfies
+* Video calls
+* Profile pictures
+* Face verification
+
+---
+
+# Camera Modes
+
+### Picture Mode
+
+```tsx
+<CameraView
+  mode="picture"
+/>
+```
+
+Used with:
+
+```tsx
+await cameraRef.current?.takePictureAsync();
+```
+
+---
+
+### Video Mode
+
+```tsx
+<CameraView
+  mode="video"
+/>
+```
+
+Used with:
+
+```tsx
+await cameraRef.current?.recordAsync();
+```
+
+---
+
+# Flash
+
+### Off
+
+```tsx
+<CameraView flash="off" />
+```
+
+Flash never fires.
+
+---
+
+### On
+
+```tsx
+<CameraView flash="on" />
+```
+
+Always fires when photo is taken.
+
+---
+
+### Auto
+
+```tsx
+<CameraView flash="auto" />
+```
+
+System decides based on lighting.
+
+---
+
+# Torch
+
+Torch is different from flash.
+
+```tsx
+<CameraView
+  enableTorch={true}
+/>
+```
+
+### Flash
+
+```txt
+Only when photo is captured
+```
+
+### Torch
+
+```txt
+LED remains ON continuously
+```
+
+Useful for:
+
+* QR scanner
+* Document scanner
+* Low-light preview
+
+---
+
+# Zoom
+
+### No Zoom
+
+```tsx
+zoom={0}
+```
+
+---
+
+### Medium Zoom
+
+```tsx
+zoom={0.5}
+```
+
+---
+
+### Maximum Zoom
+
+```tsx
+zoom={1}
+```
+
+```txt
+0     = no zoom
+0.25  = slight zoom
+0.50  = medium zoom
+0.75  = high zoom
+1.00  = maximum zoom
+```
+
+---
+
+# Mirror
+
+Useful for selfie camera.
+
+```tsx
+<CameraView
+  facing="front"
+  mirror={true}
+/>
+```
+
+Without mirror:
+
+```txt
+Real camera view
+```
+
+With mirror:
+
+```txt
+Like looking in a mirror
+```
+
+---
+
+# Barcode Scanner
+
+### QR Only
+
+```tsx
+<CameraView
+  barcodeScannerSettings={{
+    barcodeTypes: ["qr"],
+  }}
+/>
+```
+
+### Multiple Types
+
+```tsx
+<CameraView
+  barcodeScannerSettings={{
+    barcodeTypes: [
+      "qr",
+      "ean13",
+      "ean8",
+      "code128"
+    ],
+  }}
+/>
+```
+
+---
+
+# onBarcodeScanned
+
+```tsx
+<CameraView
+  onBarcodeScanned={({ data }) => {
+    console.log(data);
+  }}
+/>
+```
+
+Returned object:
+
+```tsx
+{
+  type: "qr",
+  data: "https://example.com"
+}
+```
+
+---
+
+# onCameraReady
+
+```tsx
+<CameraView
+  onCameraReady={() => {
+    setReady(true);
+  }}
+/>
+```
+
+Use it before enabling:
+
+```tsx
+Take Photo
+Record Video
+Scan QR
+```
+
+---
+
+# onMountError
+
+```tsx
+<CameraView
+  onMountError={(error) => {
+    console.log(error.message);
+  }}
+/>
+```
+
+Useful when:
+
+* Permission denied
+* Camera unavailable
+* Emulator limitation
+* Hardware issue
+
+---
+
+# Most Common Production Setup
+
+```tsx
+<CameraView
+  ref={cameraRef}
+  style={{ flex: 1 }}
+  facing={facing}
+  mode="picture"
+  flash="auto"
+  zoom={0}
+  onCameraReady={() => setReady(true)}
+  onMountError={(error) =>
+    console.log(error.message)
+  }
+/>
+```
+
 
 ---
 
