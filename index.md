@@ -171,7 +171,7 @@ Learn how to build, update, and publish mobile applications.
 * Build Profiles
 * OTA Updates
 
-🔗 **Read More:** [Day 11 Notes](./week06/day11)
+🔗 **Read More:** [Day 11 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day11/src/notes)
 
 ---
 
@@ -184,7 +184,35 @@ Learn how to build, update, and publish mobile applications.
 * EAS Submit to Play Store
 * Publishing Your First App
 
-🔗 **Read More:** [Day 12 Notes](./week06/day12)
+🔗 **Read More:** [Day 12 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day12/src/notes)
+
+---
+
+
+# 🗓️ Week 07 — App Deployment
+
+Learn how to build, update, and publish mobile applications.
+
+### 📅 Day 13 — Camera & Audio
+
+* Expo Camera
+* Expo audio
+
+🔗 **Read More:** [Day 11 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day13/notes)
+
+---
+
+### 📅 Day 14 — Device and System API
+
+* expo Media Library
+* expo Network Status
+* expo Barttary 
+* expo Haptics
+* contacts access
+* Location (expo-location)
+* file handling (document picker)
+
+🔗 **Read More:** [Day 12 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day14/notes)
 
 ---
 
