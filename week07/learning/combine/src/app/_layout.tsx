@@ -13,6 +13,12 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="contact"
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 }
