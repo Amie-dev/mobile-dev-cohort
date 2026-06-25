@@ -19,7 +19,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.amie.code.exponotification",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "google-services.json"
     },
     "web": {
       "output": "static",
