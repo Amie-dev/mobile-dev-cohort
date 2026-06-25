@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "day15",
-    "slug": "day15",
+    "name": "expo-notification",
+    "slug": "expo-notification",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "day15",
+    "scheme": "exponotification",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

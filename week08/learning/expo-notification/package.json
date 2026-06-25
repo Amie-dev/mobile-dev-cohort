@@ -1,5 +1,5 @@
 {
-  "name": "day15",
+  "name": "expo-notification",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
