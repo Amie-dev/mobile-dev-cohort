@@ -179,9 +179,9 @@ This allows Metro bundler to understand `.sql` migration files.
 Install required Babel packages:
 
 ```bash
-npm expo install -D babel-plugin-inline-import babel-preset-expo
-
+npx expo install babel-preset-expo
 npm install -D babel-plugin-inline-import
+
 npx expo install babel-preset-expo
 ```
 
