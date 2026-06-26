@@ -34,8 +34,24 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification_icon.png",
+          "color": "#ffffff",
+          "defaultChannel": "default",
+          "sounds": [
+            "./assets/notification_sound.mp3",
+            "./assets/notification_sound_other.mp3",
+            "./assets/universfield-new-notification-051-494246.mp3"
+          ],
+          "enableBackgroundRemoteNotifications": true
+        }
+      ],
+      "expo-sqlite"
     ],
+
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
