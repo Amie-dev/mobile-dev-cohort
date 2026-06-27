@@ -997,3 +997,222 @@ To update, cancel, or manage scheduled notifications later.
 ✅ Cancel all notifications
 
 ✅ Production-ready architecture for Habit Tracker, Reminder Apps, Alarm Apps, and Task Management Apps.
+
+---
+```javascript
+
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Button, ScrollView, Alert } from "react-native";
+import * as Notifications from "expo-notifications";
+
+const Local = () => {
+
+  const [lastNotification, setLastNotification] = useState<any>(null);
+
+  /**
+   * 🔔 FOREGROUND HANDLER (how to show notification when app is open)
+   */
+  useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowBanner: true,
+        shouldShowList: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      }),
+    });
+
+    /**
+     * 📩 WHEN NOTIFICATION ARRIVES (app open)
+     */
+    const receivedSub =
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log("📩 Received:", notification);
+        setLastNotification(notification);
+      });
+
+    /**
+     * 👆 WHEN USER TAPS NOTIFICATION
+     */
+    const responseSub =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("👆 Tapped:", response);
+
+        const data = response.notification.request.content.data;
+
+        Alert.alert(
+          "Notification Clicked",
+          JSON.stringify(data)
+        );
+      });
+
+    return () => {
+      receivedSub.remove();
+      responseSub.remove();
+    };
+  }, []);
+
+  /**
+   * ⏱ INSTANT NOTIFICATION
+   */
+  const sendInstant = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "⚡ Instant Notification",
+        body: "This is triggered immediately",
+        data: { type: "instant" },
+      },
+      trigger: null,
+    });
+  };
+
+  /**
+   * ⏳ DELAY NOTIFICATION (5 sec)
+   */
+  const sendDelay = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "⏳ Delayed Notification",
+        body: "This appears after 5 seconds",
+        data: { type: "delay" },
+      },
+      trigger: {
+    type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+    seconds: 6,
+    // repeats: true,
+  },
+    });
+  };
+
+  /**
+   * 🔁 REPEATING NOTIFICATION (every day)
+   */
+  const sendRepeat = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "🔁 Daily Reminder",
+        body: "Drink water / Study / Workout",
+        data: { type: "repeat" },
+      },
+      trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.DAILY,
+
+        hour: 9,
+        minute: 0,
+        // repeats: true,
+      },
+    });
+
+    Alert.alert("Scheduled", "Daily notification set at 9:00 AM");
+  };
+
+  /**
+   * 📅 CALENDAR NOTIFICATION (specific time)
+   */
+  const sendCalendar = async () => {
+    const date = new Date();
+    date.setSeconds(date.getSeconds() + 10);
+
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "📅 Calendar Notification",
+        body: "Scheduled for specific time",
+        data: { type: "calendar" },
+      },
+      trigger: {
+        type:Notifications.SchedulableTriggerInputTypes.DATE,
+        date
+      },
+    });
+  };
+
+  /**
+   * ❌ CANCEL ALL NOTIFICATIONS
+   */
+  const cancelAll = async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+    Alert.alert("Cancelled", "All notifications removed");
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+
+      <Text style={styles.title}>📱 Local Notifications Dashboard</Text>
+
+      {/* ACTION BUTTONS */}
+      <View style={styles.card}>
+        <Button title="⚡ Instant Notification" onPress={sendInstant} />
+      </View>
+
+      <View style={styles.card}>
+        <Button title="⏳ Delay (5 sec)" onPress={sendDelay} />
+      </View>
+
+      <View style={styles.card}>
+        <Button title="🔁 Daily Repeat" onPress={sendRepeat} />
+      </View>
+
+      <View style={styles.card}>
+        <Button title="📅 Calendar (10 sec)" onPress={sendCalendar} />
+      </View>
+
+      <View style={styles.card}>
+        <Button title="❌ Cancel All" color="red" onPress={cancelAll} />
+      </View>
+
+      {/* LAST NOTIFICATION VIEW */}
+      <View style={styles.notificationBox}>
+        <Text style={styles.subTitle}>📩 Last Notification</Text>
+
+        {lastNotification ? (
+          <>
+            <Text>Title: {lastNotification.request.content.title}</Text>
+            <Text>Body: {lastNotification.request.content.body}</Text>
+            <Text>
+              Data: {JSON.stringify(lastNotification.request.content.data)}
+            </Text>
+          </>
+        ) : (
+          <Text>No notification received yet</Text>
+        )}
+      </View>
+
+    </ScrollView>
+  );
+};
+
+export default Local;
+
+/**
+ * 🎨 SIMPLE UI STYLES
+ */
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    gap: 15,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  card: {
+    marginVertical: 5,
+  },
+  notificationBox: {
+    marginTop: 20,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    backgroundColor: "#f9f9f9",
+  },
+  subTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+});
+
+
+```
