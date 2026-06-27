@@ -122,31 +122,119 @@ export default function App() {
   const [notification, setNotification] =
     useState<Notifications.Notification | null>(null);
 
-  useEffect(() => {
-    async function init() {
-      const token = await registerForPushNotificationsAsync();
-      setExpoPushToken(token);
-      console.log(token);
-      setLoading(false);
-    }
+useEffect(() => {
+  // ============================================
+  // Register device for push notifications
+  // ============================================
+  async function init() {
+    // Ask for notification permission and get Expo Push Token
+    const token = await registerForPushNotificationsAsync();
 
-    init();
+    // Save the push token in state
+    setExpoPushToken(token);
 
-    const sub1 = Notifications.addNotificationReceivedListener((n) => {
-      setNotification(n);
+    console.log("Expo Push Token:", token);
+
+    // Hide loading state after initialization
+    setLoading(false);
+  }
+
+  init();
+
+  // ============================================
+  // Listener 1: Notification RECEIVED
+  // ============================================
+  // Triggered whenever a notification arrives
+  // while the app is in the foreground.
+  //
+  // Examples:
+  // - Local notification fires
+  // - Push notification arrives
+  //
+  // This listener DOES NOT mean the user tapped it.
+  //
+  const receivedSubscription =
+    Notifications.addNotificationReceivedListener((notification) => {
+      console.log("📩 Notification Received");
+      console.log(notification);
+
+      // Save latest notification
+      setNotification(notification);
     });
 
-    const sub2 = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
-        console.log("Notification tapped:", response);
-      },
-    );
+  // ============================================
+  // Listener 2: Notification RESPONSE
+  // ============================================
+  // Triggered when the user interacts with
+  // (taps or presses an action button on)
+  // a notification.
+  //
+  // Works when:
+  // - App is closed
+  // - App is in background
+  // - App is in foreground
+  //
+  // Useful for:
+  // - Deep linking
+  // - Navigation
+  // - Opening a specific screen
+  //
+  const responseSubscription =
+    Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log("👆 Notification Tapped");
+      console.log(response);
 
-    return () => {
-      sub1.remove();
-      sub2.remove();
-    };
-  }, []);
+      // Notification object
+      console.log(
+        "Notification:",
+        response.notification
+      );
+
+      // Custom data sent with notification
+      console.log(
+        "Payload:",
+        response.notification.request.content.data
+      );
+
+      // Action identifier
+      console.log(
+        "Action:",
+        response.actionIdentifier
+      );
+
+      // Example:
+      // router.push("/habit-details");
+    });
+
+  // ============================================
+  // Check if app was OPENED from a notification
+  // ============================================
+  // This runs once when the app starts.
+  //
+  // Useful when:
+  // User taps a notification while
+  // the app is completely terminated.
+  //
+  Notifications.getLastNotificationResponseAsync().then((response) => {
+    if (!response) return;
+
+    console.log("🚀 App opened from notification");
+    console.log(response);
+
+    // Example:
+    // router.push("/work");
+  });
+
+  // ============================================
+  // Cleanup listeners
+  // ============================================
+  return () => {
+    receivedSubscription.remove();
+    responseSubscription.remove();
+  };
+}, []);
+
+
 
   return (
     <View
