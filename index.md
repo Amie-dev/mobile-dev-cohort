@@ -308,7 +308,7 @@ https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week09/learning/day17/no
 
 ---
 
-### 📅 Day 18 — Background Tasks
+### 📅 Day 18 — Background Tasks & Deep Linking
 
 - Background Fetch
 - Task Manager
@@ -317,6 +317,7 @@ https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week09/learning/day17/no
 - Scheduled Tasks
 - Headless Execution
 - Battery Optimization
+- Deep Linking
 
 🔗 **Read More:**  
 https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week09/learning/day18/notes
