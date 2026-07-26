@@ -1,8 +1,8 @@
 # 🚀 Mobile Dev Cohort
 
-Welcome to the **Mobile Development Cohort** powered by Chaicode!
+Welcome to the **Mobile Development Cohort** powered by **Chaicode**!
 
-This repository contains all learning notes, assignments, projects, and deployment workflows designed to help you transition from **React JS fundamentals** to **modern mobile development** using **React Native**, **Expo**, and the mobile ecosystem.
+This repository contains all learning notes, assignments, practice projects, and deployment workflows designed to help you transition from **React fundamentals** to **professional mobile app development** using **React Native**, **Expo**, and the modern mobile ecosystem.
 
 ---
 
@@ -10,233 +10,356 @@ This repository contains all learning notes, assignments, projects, and deployme
 
 ## 🗓️ Week 01 — React Refresh
 
-Strengthen your React foundation before moving into mobile development.
+Strengthen your React foundation before diving into mobile development.
 
 ### 📅 Day 01 — React Fundamentals
 
-* What is React?
-* Why React?
-* Library vs Framework
-* SPA (Single Page Application)
-* Component-Based Architecture
-* React Application Structure
+- What is React?
+- Why React?
+- Library vs Framework
+- Single Page Application (SPA)
+- Virtual DOM
+- Component-Based Architecture
+- React Application Structure
+- JSX
+- Props
 
-🔗 **Read More:** [Day 01 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week01/Learning/day01/README.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week01/Learning/day01/README.md
 
 ---
 
 ### 📅 Day 02 — React Core Concepts
 
-* React Hooks
-* `useState`
-* `useEffect`
-* Event Handling
-* Form Handling
-* Controlled Components
-* Uncontrolled Components
+- State
+- Lifecycle
+- React Hooks
+- useState
+- useEffect
+- Event Handling
+- Forms
+- Controlled Components
+- Uncontrolled Components
+- Conditional Rendering
+- Lists & Keys
 
-🔗 **Read More:** [Day 02 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week01/Learning/day02/README.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week01/Learning/day02/README.md
 
 ---
 
 # 🗓️ Week 02 — Mobile Development Fundamentals
 
-Start your journey into mobile development with Expo and React Native.
+Learn the fundamentals of React Native and Expo.
 
 ### 📅 Day 03 — Introduction to Mobile Development
 
-* 📱 What is Mobile Development?
-* Mobile Operating Systems
-* Native vs Hybrid Apps
-* Why React Native?
-* What is Expo?
-* Expo vs React Native CLI
+- 📱 What is Mobile Development?
+- Mobile Operating Systems
+- Native vs Hybrid Apps
+- Why React Native?
+- What is Expo?
+- Expo vs React Native CLI
+- Development Workflow
+- Expo Go
 
-🔗 **Read More:** [Day 03 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week02/learning/day03/notes00.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week02/learning/day03/notes00.md
 
 ---
 
 ### 📅 Day 04 — React Native Basics
 
-* ⚛️ Core Components
-* Styling with StyleSheet
-* Safe Area
-* Responsive Layouts
-* Dark & Light Theme
-* Screen Structure
+- Core Components
+- Styling with StyleSheet
+- Flexbox Layout
+- Safe Area
+- Responsive UI
+- Images
+- ScrollView
+- FlatList
+- Themes (Dark & Light)
 
-🔗 **Read More:** [Day 04 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week02/learning/day04/README.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week02/learning/day04/README.md
 
 ---
 
 # 🗓️ Week 03 — Navigation & Routing
 
-Learn how users move through mobile applications.
+Master navigation patterns used in real-world mobile apps.
 
 ### 📅 Day 05 — React Navigation
 
-* Stack Navigation
-* Native Stack Navigation
-* Bottom Tab Navigation
-* Drawer Navigation
-* Authentication Flow
-* Nested Navigation
-* Deep Linking Basics
+- Stack Navigation
+- Native Stack
+- Bottom Tabs
+- Drawer Navigation
+- Authentication Flow
+- Nested Navigation
+- Deep Linking
 
-🔗 **Read More:** [Day 05 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week03/learning/day05.1/readme.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week03/learning/day05.1/readme.md
 
 ---
 
-### 📅 Day 06 — Expo Router 101
+### 📅 Day 06 — Expo Router
 
-* File-Based Routing
-* Layouts
-* Route Groups
-* Dynamic Routes
-* Navigation APIs
-* Protected Routes
+- File-Based Routing
+- Layouts
+- Route Groups
+- Dynamic Routes
+- Navigation APIs
+- Protected Routes
+- Modal Routes
+- Deep Linking
 
-🔗 **Read More:** [Day 06 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week03/learning/day06/README.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week03/learning/day06/README.md
 
 ---
 
 # 🗓️ Week 04 — Backend & Offline Support
 
-Connect your app to APIs and store data locally.
+Connect applications with APIs and store data locally.
 
-### 📅 Day 07 — Networking & Backend Integrations
+### 📅 Day 07 — Networking & Backend Integration
 
-* 🌐 API Fundamentals
-* Fetch API
-* REST APIs
-* Expo API Routes
-* Backend Integration
-* Error Handling
+- 🌐 HTTP Basics
+- Fetch API
+- REST APIs
+- CRUD Operations
+- Backend Integration
+- Error Handling
+- Loading States
 
-🔗 **Read More:** [Day 07 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week04/learning/day07/README.md)
-
----
-
-### 📅 Day 08 — Data Storage & Offline Support
-
-* 💾 AsyncStorage
-* 🔐 SecureStore
-* 📁 File System
-* 🗄️ SQLite Database
-* Offline-First Applications
-
-🔗 **Read More:** [Day 08 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week04/learning/day08/notes)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week04/learning/day07/README.md
 
 ---
 
-# 🗓️ Week 05 — Mobile Sensors & Sensor Fusion
+### 📅 Day 08 — Local Storage & Offline Apps
 
-Understand how smartphones interact with the physical world.
+- AsyncStorage
+- Expo SecureStore
+- Expo FileSystem
+- SQLite
+- Offline-First Architecture
+- Local Caching
+- Data Synchronization
 
-### 📅 Day 09 — Device Sensors (Part 1)
-
-* Accelerometer
-* Magnetometer
-* Light Sensor
-* Sensor Permissions
-* Real-World Use Cases
-
-🔗 **Read More:** [Day 09 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week05/learning/day09/README.md)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week04/learning/day08/notes
 
 ---
 
-### 📅 Day 10 — Device Sensors (Part 2)
+# 🗓️ Week 05 — Mobile Sensors
 
-* Barometer
-* Gyroscope
-* Device Motion
-* Pedometer
-* Magnetometer Uncalibrated
-* Sensor Fusion
+Learn how smartphones interact with the physical world.
 
-🔗 **Read More:** [Day 10 Notes](https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week05/learning/day10/README.md)
+### 📅 Day 09 — Sensors (Part 1)
+
+- Accelerometer
+- Magnetometer
+- Ambient Light Sensor
+- Sensor Permissions
+- Practical Use Cases
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week05/learning/day09/README.md
+
+---
+
+### 📅 Day 10 — Sensors (Part 2)
+
+- Gyroscope
+- Barometer
+- Device Motion
+- Pedometer
+- Magnetometer (Uncalibrated)
+- Sensor Fusion
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/blob/main/week05/learning/day10/README.md
 
 ---
 
 # 🗓️ Week 06 — App Deployment
 
-Learn how to build, update, and publish mobile applications.
+Learn how to build and publish production-ready applications.
 
 ### 📅 Day 11 — EAS Workflow
 
-* EAS Build
-* EAS Submit
-* EAS Update
-* EAS Workflow
-* Build Profiles
-* OTA Updates
+- EAS Build
+- EAS Submit
+- EAS Update
+- Build Profiles
+- OTA Updates
+- Development Builds
 
-🔗 **Read More:** [Day 11 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day11/src/notes)
-
----
-
-### 📅 Day 12 — Play Store Deployment
-
-* Google Play Console
-* App Signing
-* Release Management
-* Uploading AAB Files
-* EAS Submit to Play Store
-* Publishing Your First App
-
-🔗 **Read More:** [Day 12 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day12/src/notes)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day11/src/notes
 
 ---
 
+### 📅 Day 12 — Google Play Store Deployment
 
-# 🗓️ Week 07 — App Deployment
+- Google Play Console
+- App Signing
+- Release Management
+- Internal Testing
+- Closed Testing
+- Production Release
+- EAS Submit
 
-Learn how to build, update, and publish mobile applications.
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week06/learning/day12/src/notes
+
+---
+
+# 🗓️ Week 07 — Expo APIs
+
+Learn to use device capabilities through Expo APIs.
 
 ### 📅 Day 13 — Camera & Audio
 
-* Expo Camera
-* Expo audio
+- Expo Camera
+- Image Capture
+- Barcode Scanner
+- Audio Recording
+- Audio Playback
+- Permissions
 
-🔗 **Read More:** [Day 11 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day13/notes)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day13/notes
 
 ---
 
-### 📅 Day 14 — Device and System API
+### 📅 Day 14 — Device & System APIs
 
-* expo Media Library
-* expo Network Status
-* expo Barttary 
-* expo Haptics
-* contacts access
-* Location (expo-location)
-* file handling (document picker)
+- Media Library
+- Network Status
+- Battery
+- Haptics
+- Contacts
+- Location
+- Document Picker
+- File Handling
+- Sharing
+- Clipboard
 
-🔗 **Read More:** [Day 12 Notes](https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day14/notes)
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week07/learning/day14/notes
+
+---
+
+# 🗓️ Week 08 — Notifications
+
+Learn how notifications work in mobile applications.
+
+### 📅 Day 15 — Local Notifications
+
+- Introduction to Notifications
+- Expo Notifications
+- Notification Permissions
+- Scheduling Notifications
+- Repeating Notifications
+- Notification Channels (Android)
+- Handling Notification Events
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week08/learning/notes
+
+---
+
+### 📅 Day 16 — Push Notifications
+
+- Expo Push Notifications
+- Expo Push Token
+- Firebase Cloud Messaging (FCM)
+- Sending Push Notifications
+- Notification Payload
+- Background Notifications
+- Deep Linking from Notifications
+- Notification Best Practices
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week08/learning/notes
+
+---
+
+# 🗓️ Week 09 — Authentication & Background Tasks
+
+Build secure and production-ready mobile applications.
+
+### 📅 Day 17 — Authentication
+
+- Google Authentication
+- GitHub Authentication
+- OAuth Flow
+- Expo Auth Session
+- Secure Token Storage
+- Session Management
+- Logout Flow
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week09/learning/day17/notes
+
+---
+
+### 📅 Day 18 — Background Tasks
+
+- Background Fetch
+- Task Manager
+- Background Location
+- Background Notifications
+- Scheduled Tasks
+- Headless Execution
+- Battery Optimization
+
+🔗 **Read More:**  
+https://github.com/Amie-dev/mobile-dev-cohort/tree/main/week09/learning/day18/notes
 
 ---
 
 # 🎯 Final Outcome
 
-By the end of this cohort you will be able to:
+By the end of this cohort, you will be able to:
 
-✅ Build React Native applications
+- ✅ Build production-ready React Native applications
+- ✅ Use Expo professionally
+- ✅ Design responsive mobile interfaces
+- ✅ Implement Navigation & Routing
+- ✅ Integrate REST APIs and backend services
+- ✅ Build Offline-First applications
+- ✅ Work with mobile sensors and device APIs
+- ✅ Implement authentication
+- ✅ Store data securely
+- ✅ Add local and push notifications
+- ✅ Manage background tasks
+- ✅ Build and deploy apps using EAS
+- ✅ Publish applications to the Google Play Store
 
-✅ Use Expo professionally
+---
 
-✅ Implement Navigation & Routing
+## 🛠️ Tech Stack Covered
 
-✅ Work with APIs and Backends
-
-✅ Build Offline-First Apps
-
-✅ Use Mobile Sensors
-
-✅ Store Data Locally
-
-✅ Deploy Apps using EAS
-
-✅ Publish Apps to the Google Play Store
+- React
+- React Native
+- Expo
+- Expo Router
+- React Navigation
+- JavaScript
+- TypeScript
+- REST APIs
+- AsyncStorage
+- SQLite
+- SecureStore
+- Expo APIs
+- Firebase Cloud Messaging (FCM)
+- EAS Build
+- Google Play Console
 
 ---
 
